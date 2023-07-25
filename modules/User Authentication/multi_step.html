@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Step Account Creation</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3 class="mb-4">Create Your Account</h3>
+        <form id="accountForm">
+            <!-- Step 1: Personal Information -->
+            <div class="step step-1 active">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" class="form-control" required>
+                </div>
+                <div class="step-navigation">
+                    <button type="button" class="btn btn-primary next-btn" data-step="step-1">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Contact Information -->
+            <div class="step step-2">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+                <div class="step-navigation">
+                    <button type="button" class="btn btn-primary prev-btn" data-step="step-1">Previous</button>
+                    <button type="button" class="btn btn-primary next-btn" data-step="step-2">Next</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Create Password -->
+            <div class="step step-3">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-control" required>
+                </div>
+                <div class="step-navigation">
+                    <button type="button" class="btn btn-primary prev-btn" data-step="step-2">Previous</button>
+                    <button type="submit" class="btn btn-success">Create Account</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("accountForm");
+            const steps = form.getElementsByClassName("step");
+
+            // Function to show a specific step
+            function showStep(stepNumber) {
+                for (let i = 0; i < steps.length; i++) {
+                    steps[i].classList.remove("active");
+                }
+                steps[stepNumber - 1].classList.add("active");
+            }
+
+            // Function to handle navigation buttons
+            function handleNavigation() {
+                const nextBtns = form.getElementsByClassName("next-btn");
+                const prevBtns = form.getElementsByClassName("prev-btn");
+
+                for (let i = 0; i < nextBtns.length; i++) {
+                    nextBtns[i].addEventListener("click", function () {
+                        const currentStep = this.getAttribute("data-step");
+                        const nextStep = parseInt(currentStep.slice(-1)) + 1;
+                        showStep(nextStep);
+                    });
+                }
+
+                for (let i = 0; i < prevBtns.length; i++) {
+                    prevBtns[i].addEventListener("click", function () {
+                        const currentStep = this.getAttribute("data-step");
+                        const prevStep = parseInt(currentStep.slice(-1)) - 1;
+                        showStep(prevStep);
+                    });
+                }
+            }
+
+            // Form validation
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                const password = document.getElementById("password").value;
+                const confirmPassword = document.getElementById("confirmPassword").value;
+
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match!");
+                } else {
+                    // You can submit the form here or handle further processing
+                    alert("Account created successfully!");
+                }
+            });
+
+            // Show the first step initially
+            showStep(1);
+
+            // Handle navigation
+            handleNavigation();
+        });
+    </script>
+</body>
+</html>

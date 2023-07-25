@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Authentication</title>
+</head>
+<body>
+  <h2>Login</h2>
+  <form id="loginForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <input type="submit" value="Login">
+  </form>
+
+  <p id="message"></p>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const messageElement = document.getElementById('message');
+
+    loginForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const usernameInput = loginForm.elements.username;
+      const passwordInput = loginForm.elements.password;
+
+      const username = usernameInput.value;
+      const password = passwordInput.value;
+
+      // Replace these with your actual credentials
+      const correctUsername = 'user123';
+      const correctPassword = 'password123';
+
+      if (username === correctUsername && password === correctPassword) {
+        messageElement.textContent = 'Login successful!';
+        // Redirect to the dashboard or authenticated page here.
+      } else {
+        messageElement.textContent = 'Invalid username or password. Please try again.';
+      }
+    });
+  </script>
+</body>
+</html>

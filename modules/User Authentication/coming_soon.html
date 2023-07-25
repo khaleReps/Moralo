@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <!-- Bootstrap CSS (optional, you can use any other CSS framework or custom styles) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS to style the template */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 100px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 40px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .countdown {
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+
+        .social-icons {
+            font-size: 24px;
+        }
+
+        .social-icons a {
+            color: #333;
+            margin: 0 10px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 576px) {
+            .container {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">Your Logo</div>
+        <div class="description">We're working hard to bring you something awesome. Stay tuned!</div>
+        <div class="countdown">Launching in: <span id="countdown-timer">30 days</span></div>
+        <div class="social-icons">
+            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+            <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
+        </div>
+    </div>
+
+    <!-- JavaScript for the countdown timer (optional) -->
+    <script>
+        // Set the launch date for the countdown
+        const launchDate = new Date('2023-08-01T00:00:00Z').getTime();
+
+        // Update the countdown every second
+        const countdownTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown-timer').innerHTML =
+                days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById('countdown-timer').innerHTML = 'Now Live!';
+            }
+        }, 1000);
+    </script>
+
+    <!-- Font Awesome (optional, if you want to use the social icons) -->
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+</body>
+</html>

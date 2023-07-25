@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Browser</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <!-- File List Column -->
+      <div class="col-3">
+        <h3>Files and Folders</h3>
+        <ul id="file-list" class="list-group"></ul>
+      </div>
+      <!-- File Viewer Column -->
+      <div class="col-9">
+        <h3>File Viewer</h3>
+        <div id="file-viewer"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const fileList = document.getElementById("file-list");
+      const fileViewer = document.getElementById("file-viewer");
+
+      // Fetch the list of files and folders from the server
+      fetchFileList();
+
+      function fetchFileList() {
+        fetch("/file_list") // Fetch from the server endpoint we created
+          .then((response) => response.json())
+          .then((data) => {
+            displayFileList(data);
+          })
+          .catch((error) => console.error("Error fetching file list:", error));
+      }
+
+      function displayFileList(fileListData) {
+        fileList.innerHTML = ""; // Clear the current list
+        fileListData.forEach((item) => {
+          const listItem = document.createElement("li");
+          listItem.className = "list-group-item";
+          listItem.textContent = item.name;
+          listItem.addEventListener("click", () => {
+            // Load the selected file in the file viewer section
+            fetchFileContent(item.name);
+          });
+          fileList.appendChild(listItem);
+        });
+      }
+
+      function fetchFileContent(fileName) {
+        fetch(fileName) // Assuming the server provides the file content for the given filename
+          .then((response) => response.text())
+          .then((content) => {
+            fileViewer.textContent = content;
+          })
+          .catch((error) => console.error("Error fetching file content:", error));
+      }
+    });
+  </script>
+</body>
+</html>

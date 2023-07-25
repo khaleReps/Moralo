@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Authentication</title>
+  <!-- Add Bootstrap CSS link -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Login</h2>
+    <!-- Add the alert div -->
+    <div id="alertMessage" class="alert alert-danger d-none"></div>
+    <form id="loginForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required><br>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br>
+
+      <input type="submit" value="Login">
+    </form>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const alertMessage = document.getElementById('alertMessage');
+
+    loginForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const usernameInput = loginForm.elements.username;
+      const passwordInput = loginForm.elements.password;
+
+      const username = usernameInput.value;
+      const password = passwordInput.value;
+
+      // Replace these with your actual credentials
+      const correctUsername = 'user123';
+      const correctPassword = 'password123';
+
+      if (username === correctUsername && password === correctPassword) {
+        alertMessage.classList.add('d-none');
+        // Redirect to the dashboard or authenticated page here.
+      } else {
+        alertMessage.textContent = 'Invalid username or password. Please try again.';
+        alertMessage.classList.remove('d-none');
+        // Set a timeout to hide the alert after 5 seconds (5000 milliseconds)
+        setTimeout(function() {
+          alertMessage.classList.add('d-none');
+        }, 1500);
+      }
+    });
+  </script>
+</body>
+</html>
